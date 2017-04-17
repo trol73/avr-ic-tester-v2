@@ -1,0 +1,289 @@
+CHIP[16] 'ИЕ8'
+	POWER: -8* +16*
+	IN: 4(E0), 1(E1), 14(E2), 15(E3), 2(E4), 3(E5),		9(C), 10(ST), 11(P0), 12(CC), 13(R)
+	OUT: 6(Y), 5(Z), 7(P6)
+
+	# устанавливаем коэфициент деления 2 и выполняем сброс
+	SET: 000001:0:001:1
+	# снимаем сброс
+	SET: 0 -> R
+	TEST: 10:1
+
+	PULSE: -C
+	TEST: 01:1
+	PULSE: -C
+	TEST: 10:1
+	PULSE: -C
+	TEST: 01:1
+	PULSE: -C
+
+
+	# устанавливаем коэфициент деления 4 и выполняем сброс
+	SET: 000010:0:001:1
+	# снимаем сброс
+	SET: 0 -> R
+	TEST: 01:1
+
+	PULSE: -C
+	TEST: 10:1
+	PULSE: -C
+	TEST: 01:1
+	PULSE: -C
+	TEST: 01:1
+	PULSE: -C
+	TEST: 01:1
+	PULSE: -C
+	TEST: 10:1
+	PULSE: -C
+	TEST: 01:1
+
+
+	# устанавливаем коэфициент деления 8 и выполняем сброс
+	SET: 000100:0:001:1
+	# снимаем сброс
+	SET: 0 -> R
+	TEST: 01:1
+
+	# 8:1
+	PULSE: -C
+	TEST: 01:1
+	# 8:2
+	PULSE: -C
+	TEST: 01:1
+	# 8:3 *
+	PULSE: -C
+	TEST: 10:1
+
+	# 8:4	
+	PULSE: -C
+	TEST: 01:1
+	# 8:5	
+	PULSE: -C
+	TEST: 01:1
+	# 8:6	
+	PULSE: -C
+	TEST: 01:1
+	# 8:7	
+	PULSE: -C
+	TEST: 01:1
+	# 8:8	
+	PULSE: -C
+	TEST: 01:1
+	# 8:9
+	PULSE: -C
+	TEST: 01:1
+	# 8:10
+	PULSE: -C
+	TEST: 01:1
+	# 8:11
+	PULSE: -C
+	TEST: 10:1
+	# 8:12
+	PULSE: -C
+	TEST: 01:1	
+	
+
+	# устанавливаем коэфициент деления 16 и выполняем сброс
+	SET: 001000:0:001:1
+	# снимаем сброс
+	SET: 0 -> R
+	TEST: 01:1
+
+	# 16:1
+	PULSE: -C
+	TEST: 01:1
+	# 16:2	
+	PULSE: -C
+	TEST: 01:1
+	# 16:3
+	PULSE: -C
+	TEST: 01:1
+	# 16:4
+	PULSE: -C
+	TEST: 01:1
+	# 16:5
+	PULSE: -C
+	TEST: 01:1
+	# 16:6
+	PULSE: -C
+	TEST: 01:1
+	# 16:7 *
+	PULSE: -C
+	TEST: 10:1
+	# 16:8
+	PULSE: -C
+	TEST: 01:1
+	# 16:9
+	PULSE: -C
+	TEST: 01:1
+	# 16:10
+	PULSE: -C
+	TEST: 01:1
+	# 16:11
+	PULSE: -C
+	TEST: 01:1
+	# 16:12
+	PULSE: -C
+	TEST: 01:1
+	# 16:13
+	PULSE: -C
+	TEST: 01:1
+	# 16:14
+	PULSE: -C
+	TEST: 01:1
+	# 16:15
+	PULSE: -C
+	TEST: 01:1
+	# 16:16
+	PULSE: -C
+	TEST: 01:1
+	# 16:17
+	PULSE: -C
+	TEST: 01:1
+	# 16:18
+	PULSE: -C
+	TEST: 01:1
+	# 16:19
+	PULSE: -C
+	TEST: 01:1
+	# 16:20
+	PULSE: -C
+	TEST: 01:1
+	# 16:21
+	PULSE: -C
+	TEST: 01:1
+	# 16:22
+	PULSE: -C
+	TEST: 01:1
+	# 16:23 *
+	PULSE: -C
+	TEST: 10:1
+	# 16:24
+	PULSE: -C
+	TEST: 01:1
+	# 16:25
+	PULSE: -C
+	TEST: 01:1
+	# 16:26
+	PULSE: -C
+	TEST: 01:1
+	# 16:27
+	PULSE: -C
+	TEST: 01:1
+
+
+	# устанавливаем коэфициент деления 32 и выполняем сброс
+	SET: 010000:0:001:1
+	# снимаем сброс
+	SET: 0 -> R
+	TEST: 01:1
+
+	# 32:1
+	PULSE: -C
+	TEST: 01:1
+	# 32:2
+	PULSE: -C
+	TEST: 01:1
+	# 32:3
+	PULSE: -C
+	TEST: 01:1
+	# 32:4
+	PULSE: -C
+	TEST: 01:1
+	# 32:5
+	PULSE: -C
+	TEST: 01:1
+	# 32:6
+	PULSE: -C	
+	TEST: 01:1
+	# 32:7
+	PULSE: -C	
+	TEST: 01:1
+	# 32:8
+	PULSE: -C
+	TEST: 01:1
+	# 32:9
+	PULSE: -C
+	TEST: 01:1
+	# 32:10
+	PULSE: -C	
+	TEST: 01:1
+	# 32:11
+	PULSE: -C	
+	TEST: 01:1
+	# 32:12
+	PULSE: -C	
+	TEST: 01:1
+	# 32:13
+	PULSE: -C
+	TEST: 01:1
+	# 32:14
+	PULSE: -C	
+	TEST: 01:1
+	# 32:15 *
+	PULSE: -C	
+	TEST: 10:1
+	# 32:16
+	PULSE: -C
+	TEST: 01:1
+
+	PULSE: -C[30]
+	TEST: 01:1
+	PULSE: -C	
+	TEST: 10:1
+
+
+	# устанавливаем коэфициент деления 64 и выполняем сброс
+	SET: 010000:0:001:1
+	# снимаем сброс
+	SET: 0 -> R
+	TEST: 01:1
+
+	PULSE: -C
+	TEST: 01:1
+	
+	PULSE: -C[13]
+	TEST: 01:1
+
+	PULSE: -C
+	TEST: 10:1
+
+	PULSE: -C
+	TEST: 01:1
+
+	PULSE: -C[62]
+	TEST: 01:1
+
+	PULSE: -C
+	TEST: 10:1
+
+	PULSE: -C
+	TEST: 01:1		
+
+
+
+	# проверяем работоспособность выхода P6
+	#
+	# устанавливаем коэфициент деления 4 и выполняем сброс
+	SET: 000010:0:001:1
+	# снимаем сброс
+	SET: 0 -> R
+	TEST: 01:1
+
+	# проверяем работоспособность выхода P6
+	PULSE: -C[63]
+	TEST: 01:0
+	PULSE: -C
+	TEST: 01:1
+
+	# проверяем вывод сброса
+	#
+	# устанавливаем коэфициент деления 4 и выполняем сброс
+	SET: 000010:0:001:1
+	# снимаем сброс
+	SET: 0 -> R
+	PULSE: -C
+	TEST: 10:1
+	SET: 1 -> R
+	TEST: 01:1
+

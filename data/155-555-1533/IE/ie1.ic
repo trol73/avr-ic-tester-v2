@@ -1,0 +1,54 @@
+CHIP[14] 'ИЕ1'
+	POWER: -7 +14
+	IN: 1, 2, 8, 9
+	OUT: 5
+
+#проверка на сброс
+	TEST: 1111 => 1
+#проверка на 10 импульсов
+	SET: 0 -> 1, 2 
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 1
+	PULSE: -8
+	TEST: 0
+	TEST: 1000 => 0 
+	TEST: 0100 => 0
+	SET: 1 -> 1,2,8,9
+#убираем сброс и проверка на 9 импульсов по другому входу
+	SET: 0 -> 1,2 
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 1
+	PULSE: -9
+	TEST: 0

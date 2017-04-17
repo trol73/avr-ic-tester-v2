@@ -1,0 +1,533 @@
+CHIP[40] 'КР580ВВ55'
+	POWER: -7* +26*
+	IN: 6(~CS),35(RES),5(~RD),36(~WR),8(A1),9(A0),27(D7),28(D6),29(D5),30(D4),31(D3),32(D2),33(D1),34(D0)
+	OUT: 37(PA7),38(PA6),39(PA5),40(PA4),1(PA3),2(PA2),3(PA1),4(PA0),25(PB7),24(PB6),23(PB5),22(PB4),21(PB3),20(PB2),19(PB1),18(PB0),10(PC7),11(PC6),12(PC5),13(PC4),17(PC3),16(PC2),15(PC1),14(PC0)
+
+		
+	##сброс и проверка портов на Z-состояние (режим не реализован, т.к. не все экземпляры ВВ55 корректно проходят этот тест!)
+	SET: 1 -> RES,~CS,~RD,~WR;
+	SET: 0 -> RES,A0,A1,D7,D6,D5,D4,D3,D2,D1,D0
+	#TEST: 00000000:00000000:00000000
+	#SET: 1 -> PA7,PA6,PA5,PA4,PA3,PA2,PA1,PA0, PB7,PB6,PB5,PB4,PB3,PB2,PB1,PB0, PC7,PC6,PC5,PC4,PC3,PC2,PC1,PC0
+	#TEST: 11111111:11111111:11111111
+	#SET: 0 -> PA7,PA6,PA5,PA4,PA3,PA2,PA1,PA0, PB7,PB6,PB5,PB4,PB3,PB2,PB1,PB0, PC7,PC6,PC5,PC4,PC3,PC2,PC1,PC0
+	
+	##Режим 0 - проверка всех портов на ввод
+		
+	#запись РУС=%10011011
+	SET: 1 -> D7,D4,D3,D1,D0,A1,A0; 0 -> D6,D5,D2
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	
+	CONFIG: ~CS,RES,~RD,~WR,A1,A0,PA7,PA6,PA5,PA4,PA3,PA2,PA1,PA0,PB7,PB6,PB5,PB4,PB3,PB2,PB1,PB0,PC7,PC6,PC5,PC4,PC3,PC2,PC1,PC0 -> IN; D7,D6,D5,D4,D3,D2,D1,D0 -> OUT
+	
+	#Проверка Z-состояния шины данных
+	SET: 0 -> D7,D6,D5,D4,D3,D2,D1,D0
+	TEST: 00000000
+	SET: 1 -> D7,D6,D5,D4,D3,D2,D1,D0
+	TEST: 11111111
+	SET: 0 -> D7,D6,D5,D4,D3,D2,D1,D0
+	
+	#проверка PA на ввод данных (бегущая 1)
+	SET: 0 -> A1,A0
+	SET: 0 -> PA7,PA6,PA5,PA4,PA3,PA2,PA1,PA0; 1 -> PB7,PB6,PB5,PB4,PB3,PB2,PB1,PB0,PC7,PC6,PC5,PC4,PC3,PC2,PC1,PC0
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PA7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 10000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PA7; 1 -> PA6
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 01000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PA6; 1 -> PA5
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00100000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PA5; 1 -> PA4
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00010000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PA4; 1 -> PA3
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00001000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PA3; 1 -> PA2
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000100
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PA2; 1 -> PA1
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000010
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PA1; 1 -> PA0
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000001
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PA0,PA1,PA2,PA3,PA4,PA5,PA6,PA7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 11111111
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PA0,PA2,PA4,PA6; 0 -> PA1,PA3,PA5,PA7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 01010101
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PA0,PA2,PA4,PA6; 1 -> PA1,PA3,PA5,PA7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 10101010
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	
+	#проверка PB на ввод данных (бегущая 1)
+	SET: 0 -> A1; 1 -> A0
+	SET: 0 -> PB7,PB6,PB5,PB4,PB3,PB2,PB1,PB0
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PB7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 10000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PB7; 1 -> PB6
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 01000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PB6; 1 -> PB5
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00100000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PB5; 1 -> PB4
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00010000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PB4; 1 -> PB3
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00001000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PB3; 1 -> PB2
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000100
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PB2; 1 -> PB1
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000010
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PB1; 1 -> PB0
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000001
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PB0,PB1,PB2,PB3,PB4,PB5,PB6,PB7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 11111111
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PB0,PB2,PB4,PB6; 0 -> PB1,PB3,PB5,PB7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 01010101
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PB0,PB2,PB4,PB6; 1 -> PB1,PB3,PB5,PB7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 10101010
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	#проверка PC на ввод данных (бегущая 1)
+	SET: 1 -> A1; 0 -> A0
+	SET: 0 -> PC7,PC6,PC5,PC4,PC3,PC2,PC1,PC0
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PC7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 10000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PC7; 1 -> PC6
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 01000000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PC6; 1 -> PC5
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00100000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PC5; 1 -> PC4
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00010000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PC4; 1 -> PC3
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00001000
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PC3; 1 -> PC2
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000100
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PC2; 1 -> PC1
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000010
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PC1; 1 -> PC0
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 00000001
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PC0,PC1,PC2,PC3,PC4,PC5,PC6,PC7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 11111111
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 1 -> PC0,PC2,PC4,PC6; 0 -> PC1,PC3,PC5,PC7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 01010101
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	SET: 0 -> PC0,PC2,PC4,PC6; 1 -> PC1,PC3,PC5,PC7
+	SET: 0 -> ~CS
+	SET: 0 -> ~RD
+	TEST: 10101010
+	SET: 1 -> ~RD
+	SET: 1 -> ~CS
+	
+	
+	
+	
+	
+	
+	##Режим 0 - проверка всех портов на вывод
+	
+	CONFIG: ~CS,RES,~RD,~WR,A1,A0,D7,D6,D5,D4,D3,D2,D1,D0 -> IN; PA7,PA6,PA5,PA4,PA3,PA2,PA1,PA0,PB7,PB6,PB5,PB4,PB3,PB2,PB1,PB0,PC7,PC6,PC5,PC4,PC3,PC2,PC1,PC0 -> OUT
+	
+	
+	#запись РУС=%10000000
+	SET: 1 -> D7,A1,A0; 0 -> D6,D5,D4,D3,D2,D1,D0
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+		
+	#после установки портов на вывод они принимают значение 0 (не уверен, что на всех экземплярах портов будет так!!!)
+	#проверка PA на вывод бегущей 1
+	SET: 0 -> A1,A0
+	SET: 1 -> D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 10000000:00000000:00000000
+	SET: 1 -> D6; 0 -> D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 01000000:00000000:00000000
+	SET: 1 -> D5; 0 -> D6
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00100000:00000000:00000000
+	SET: 1 -> D4; 0 -> D5
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00010000:00000000:00000000
+	SET: 1 -> D3; 0 -> D4
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00001000:00000000:00000000
+	SET: 1 -> D2; 0 -> D3
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000100:00000000:00000000
+	SET: 1 -> D1; 0 -> D2
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000010:00000000:00000000
+	SET: 1 -> D0; 0 -> D1
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000001:00000000:00000000
+	SET: 1 -> D0,D1,D2,D3,D4,D5,D6,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 11111111:00000000:00000000
+	SET: 1 -> D0,D2,D4,D6; 0 -> D1,D3,D5,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 01010101:00000000:00000000
+	SET: 0 -> D0,D2,D4,D6; 1 -> D1,D3,D5,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 10101010:00000000:00000000
+	SET: 0 -> D0,D1,D2,D3,D4,D5,D6,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00000000
+	
+	#проверка PB на вывод бегущей 1
+	SET: 0 -> A1; 1 -> A0
+	SET: 1 -> D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:10000000:00000000
+	SET: 1 -> D6; 0 -> D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:01000000:00000000
+	SET: 1 -> D5; 0 -> D6
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00100000:00000000
+	SET: 1 -> D4; 0 -> D5
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00010000:00000000
+	SET: 1 -> D3; 0 -> D4
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00001000:00000000
+	SET: 1 -> D2; 0 -> D3
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000100:00000000
+	SET: 1 -> D1; 0 -> D2
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000010:00000000
+	SET: 1 -> D0; 0 -> D1
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000001:00000000
+	SET: 1 -> D0,D1,D2,D3,D4,D5,D6,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:11111111:00000000
+	SET: 1 -> D0,D2,D4,D6; 0 -> D1,D3,D5,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:01010101:00000000
+	SET: 0 -> D0,D2,D4,D6; 1 -> D1,D3,D5,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:10101010:00000000
+	SET: 0 -> D0,D1,D2,D3,D4,D5,D6,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00000000
+	
+	#проверка PC на вывод бегущей 1
+	SET: 0 -> A0; 1 -> A1
+	SET: 1 -> D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:10000000
+	SET: 1 -> D6; 0 -> D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:01000000
+	SET: 1 -> D5; 0 -> D6
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00100000
+	SET: 1 -> D4; 0 -> D5
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00010000
+	SET: 1 -> D3; 0 -> D4
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00001000
+	SET: 1 -> D2; 0 -> D3
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00000100
+	SET: 1 -> D1; 0 -> D2
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00000010
+	SET: 1 -> D0; 0 -> D1
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00000001
+	SET: 1 -> D0,D1,D2,D3,D4,D5,D6,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:11111111
+	SET: 1 -> D0,D2,D4,D6; 0 -> D1,D3,D5,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:01010101
+	SET: 0 -> D0,D2,D4,D6; 1 -> D1,D3,D5,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:10101010
+	SET: 0 -> D0,D1,D2,D3,D4,D5,D6,D7
+	SET: 0 -> ~CS
+	SET: 0 -> ~WR
+	SET: 1 -> ~WR
+	SET: 1 -> ~CS
+	TEST: 00000000:00000000:00000000

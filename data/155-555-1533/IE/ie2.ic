@@ -1,0 +1,29 @@
+CHIP[14] 'ИЕ2, 90'
+	POWER: -10 +5
+	IN: 6, 7, 14, 1, 2, 3
+	OUT: 12, 9, 8, 11
+
+	# загрузка 1001
+	TEST: 110000 => 1001
+
+	# асинхронное обнуление
+	TEST: 001111 => 0000
+	SET: 0 -> 2, 3
+	
+	PULSE: -14
+	TEST: 1000
+	PULSE: -14
+	TEST: 0000
+	PULSE: -14
+	TEST: 1000
+	
+	PULSE: -1
+	TEST: 1100
+	PULSE: -1
+	TEST: 1010
+	PULSE: -1
+	TEST: 1110
+	PULSE: -1
+	TEST: 1001
+	PULSE: -1
+	TEST: 1000

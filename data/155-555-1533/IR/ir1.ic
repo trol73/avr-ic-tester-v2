@@ -1,0 +1,35 @@
+CHIP[14] 'ИР1, 95'
+	POWER: -7* +14*
+	IN: 9(C2), 8(C1), 1(DR), 6(L),       2(D0), 3(D1), 4(D2), 5(D3)
+	OUT: 13(Q0), 12(Q1), 11(Q2), 10(Q3)
+
+	#параллельная загрузка
+	SET: 1111:0000
+	PULSE: -8
+	TEST: 0000
+	SET: 1111:0101
+	PULSE: -8
+	TEST: 0101
+	SET: 1111:1010
+	PULSE: -8
+	TEST: 1010
+	SET: 1111:1100
+	PULSE: -8
+	TEST: 1100
+	SET: 1111:0011
+	PULSE: -8
+	TEST: 0011
+	SET: 1101:1111
+	PULSE: -8
+	TEST: 1111
+
+	#сдвиг 0
+	SET: 0 -> 6
+	PULSE: -9
+	TEST: 0111
+	PULSE: -9
+	TEST: 0011
+	PULSE: -9
+	TEST: 0001
+	PULSE: -9
+	TEST: 0000

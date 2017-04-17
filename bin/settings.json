@@ -1,0 +1,13 @@
+{
+  "serialPort": "/dev//cu.Bluetooth-Incoming-Port",
+  "paths": {
+    "compilerOutput": ""
+  },
+  "history": {},
+  "testerWindowSize": {
+    "x": 123,
+    "y": 91,
+    "width": 1000,
+    "height": 800
+  }
+}

@@ -1,0 +1,68 @@
+CHIP[16] 'ИР11'
+	POWER: -8* +16*
+	IN: 3(DI0), 4(DI1), 5(DI2), 6(DI3),	11(C), 7(DL), 2(DR), 9(S0), 10(S1), 1(R)
+	OUT: 15(DO0), 14(DO1), 13(DO2), 12(DO3)
+
+	# параллельный ввод
+	SET: 0101:000:111
+	PULSE: +C
+	TEST: 0101
+
+	SET: 1010:000:111
+	PULSE: +C
+	TEST: 1010
+
+	SET: 0000:000:111
+	PULSE: +C
+	TEST: 0000
+
+	SET: 1111:000:111
+	PULSE: +C
+	TEST: 1111
+
+	# сброс
+	SET: 0 -> R
+	TEST: 0000
+
+	# режим хранения
+	SET: 1010:000:111
+	PULSE: +C
+	TEST: 1010
+
+	SET: 0 -> S0, S1
+	TEST: 1010
+	PULSE: +C
+	TEST: 1010
+	PULSE: +C
+	TEST: 1010
+
+	# сдвиг влево
+	SET: 1111:000:111
+	PULSE: +C
+	TEST: 1111
+	
+	SET: 0 -> S0
+	PULSE: +C
+	TEST: 1110
+	PULSE: +C
+	TEST: 1100
+	PULSE: +C
+	TEST: 1000
+	PULSE: +C
+	TEST: 0000
+
+	# сдвиг вправо
+	SET: 1111:000:111
+	PULSE: +C
+	TEST: 1111
+	
+	SET: 0 -> S1
+	PULSE: +C
+	TEST: 0111
+	PULSE: +C
+	TEST: 0011
+	PULSE: +C
+	TEST: 0001
+	PULSE: +C
+	TEST: 0000
+	

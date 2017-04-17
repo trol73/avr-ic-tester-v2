@@ -1,0 +1,46 @@
+CHIP[16] 'ИР9, 165'
+	POWER: -8 +16
+	IN: 11, 12, 13, 14, 3, 4, 5, 6,     1, 2, 15, 10
+	OUT: 9, 7
+
+	TEST: 10101010:0000 => 01
+	SET: 1-> 1
+	PULSE: +2
+	TEST: 10
+	SET: 0 -> 2
+	PULSE: +15
+	TEST: 01
+	SET: 0 -> 15	
+	PULSE: +2
+	TEST: 10
+	SET: 0 -> 2	
+	PULSE: +15
+	SET: 1 -> 10
+	TEST: 01	
+	SET: 0 -> 15	
+	PULSE: +2
+	TEST: 10	
+	SET: 0 -> 2
+	PULSE: +15
+	TEST: 01
+	SET: 0 -> 15	
+	PULSE: +2
+	TEST: 10
+
+	PULSE: +2
+	TEST: 01	
+	PULSE: +2
+	TEST: 01	
+	PULSE: +2
+	TEST: 01	
+	PULSE: +2
+	TEST: 01	
+
+	PULSE: +2
+	TEST: 10
+	PULSE: +2
+	TEST: 10
+	PULSE: +2
+	TEST: 10
+	PULSE: +2
+	TEST: 10
